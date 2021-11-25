@@ -4,12 +4,12 @@ import { Container } from './styles';
 
 interface TooltipProps {
     title: string;
-    ClassName?: string;
+    className?: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ title, ClassName, children }) => {
+const Tooltip: React.FC<TooltipProps> = ({ title, className, children }) => {
     return(
-        <Container className={Tooltip}>
+        <Container className={className}>
             {children}
             <span>{title}</span>
         </Container>
