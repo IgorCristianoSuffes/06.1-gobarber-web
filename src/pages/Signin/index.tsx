@@ -56,10 +56,10 @@ const SignIn: React.FC = () => {
                 type: 'error',
                 title: 'Erro na autenticação',
                 description: 'Ocorreu um erro ao fazer login, cheque as credenciais.'
-            }); // 03:28 adicionando e removendo
+            });
             
         }
-    }, [signIn, addToast]);// asdasdasdsa
+    }, [signIn, addToast]);
 
 
     return (

@@ -8,7 +8,6 @@ const AppProvider: React.FC = ({ children }) => (
     <AuthProvider>
         <ToastProvider>
             { children }
-            <ToastContainer></ToastContainer>
         </ToastProvider>
     </AuthProvider>
 );
