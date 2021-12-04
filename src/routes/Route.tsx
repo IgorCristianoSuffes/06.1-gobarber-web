@@ -1,21 +1,25 @@
 import React from "react";
-import { RouteProps, Route } from "react-router-dom";
+import { RoutesProps, Route as ReactDOMRoute, Navigate } from "react-router-dom";
 import { useAuth } from '../hooks/auth';
 
-interface RoutePropsInterface extends RouteProps {
+interface RoutePropsInterface extends RoutesProps {
     isPrivate?: boolean;
+    path:string;
     component: React.ComponentType;
+    element: JSX.Element;
 }
 
-const Routess: React.FC<RoutePropsInterface> = ({ isPrivate = false, ...rest, component: Component }) => {
+const Routess: React.FC<RoutePropsInterface> = ({ isPrivate = false, component: Component,  ...rest }) => {
     const { user } = useAuth();
 
     return (
-        <Route
+        <ReactDOMRoute
             {...rest}
-            render={() => {
-                return isPrivate === isSigned ? (
+            children={() => {
+                return isPrivate === !!user ? (
                     <Component />
+                ) : (
+                    <Navigate to={{ pathname:isPrivate ?  '/': '/dashboard'}} />
                 )
             }}
         
