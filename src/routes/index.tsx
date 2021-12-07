@@ -1,7 +1,7 @@
 import React from "react";
-import { Routes } from "react-router-dom";
+import { Switch } from "react-router-dom";
 
-import Route from './Route';
+import Routew from './Route';
 
 import SignIn from '../pages/Signin/index';
 import SignUp from '../pages/Signup/index';
@@ -9,12 +9,12 @@ import Dashboard from '../pages/Dashboard/index';
 
 const Routess: React.FC = () => (
     <>
-    <Routes>
-        <Route path="/" component={Dashboard} element={<SignIn />} />
-        <Route path="/signup" component={Dashboard} element={<SignUp />} />
+    <Switch>
+        <Routew exact path="/"  component={SignIn} />
+        <Routew exact path="/signup" component={SignUp} />
 
-        <Route path="/dashboard" component={Dashboard} element={<Dashboard />} />
-    </Routes>
+        <Routew exact path="/dashboard" component={Dashboard} />
+    </Switch>
     </>
 );
 
