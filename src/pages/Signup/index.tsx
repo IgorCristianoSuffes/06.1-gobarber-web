@@ -6,17 +6,27 @@ import { Form } from '@unform/web';
 import { ValidationError } from 'yup';
 import * as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import api from "../../services/api";
+import { useToast } from "../../hooks/toast";
 
 import logoImg from '../../assets/logo.svg';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
+interface SignUpFormData {
+    name: string;
+    email: string;
+    password: string;
+}
+
 const SignUp: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
+    const { addToast } = useToast();
+    const history = useHistory();
 
-    const handleSubmit = useCallback(async(data: object) => {
+    const handleSubmit = useCallback(async(data: SignUpFormData) => {
         try{
             formRef.current?.setErrors({});
 
@@ -29,15 +39,36 @@ const SignUp: React.FC = () => {
             await schema.validateSync(data, {
                 abortEarly: false,
             });
+
+            await api.post('/users', data);
+
+            history.push('/');
+
+            addToast({
+                type: 'success',
+                title: 'Cadastro realizado!',
+                description: 'Você já pode fazer seu logon no GoBarber!'
+            });
+
         } catch (err) {
 
-            const err2 : ValidationError | any = err;
+            if (err instanceof Yup.ValidationError) {
 
-            const errors = getValidationErrors(err2);
+                const err2 : ValidationError | any = err;
 
-            formRef.current?.setErrors(errors);
+                const errors = getValidationErrors(err2);
+
+                formRef.current?.setErrors(errors);
+
+                return;
+            }
+            addToast({
+                type: 'error',
+                title: 'Erro no cadastro',
+                description: 'Ocorreu um erro ao fazer cadastro, tente novamente.'
+            });
         }
-    }, []);
+    }, [addToast, history]);
 
     return (
         <Container>

@@ -13,11 +13,16 @@ const Routess: React.FC<RoutePropsInterface> = ({ isPrivate = false, component: 
     return (
         <ReactDOMRoute
             { ...rest }
-            children={() => {
+            render={({ location }) => {
                 return isPrivate === !!user ? (
                     <Component />
                 ) : (
-                    <Redirect to={{ pathname:isPrivate ?  '/': '/dashboard'}} />
+                    <Redirect
+                        to={{
+                            pathname:isPrivate ?  '/': '/dashboard',
+                            state: {from: location },
+                        }}
+                    />
                 )
             }}
         

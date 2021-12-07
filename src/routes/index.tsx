@@ -10,10 +10,10 @@ import Dashboard from '../pages/Dashboard/index';
 const Routess: React.FC = () => (
     <>
     <Switch>
-        <Routew exact path="/"  component={SignIn} />
-        <Routew exact path="/signup" component={SignUp} />
+        <Routew path="/" exact component={SignIn} />
+        <Routew path="/signup" component={SignUp} />
 
-        <Routew exact path="/dashboard" component={Dashboard} />
+        <Routew path="/dashboard" component={Dashboard} isPrivate />
     </Switch>
     </>
 );
